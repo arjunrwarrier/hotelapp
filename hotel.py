@@ -18,7 +18,8 @@ while(True):
     print("***5.Burger----40rs***")
     print("***6.-----Bill-----***")
     print("'''7.View all transaction''")
-    print("***8.-----Exit-----***")
+    print("'''8.View transaction summary''")
+    print("***9.-----Exit-----***")
 
     choice = int(input("Enter a choice:"))
     if(choice == 1):
@@ -68,8 +69,17 @@ while(True):
         result = mycursor.fetchall()
         for i in result:
             print(i)
+    elif(choice ==8):
+        print("View the transaction summary")
+        dbill = input("Enter the date: ")
+        sql = "SELECT  SUM(`amount`) FROM `bills` WHERE `date` = '"+dbill+"'"
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        for i in result:
+            r = str(i[0])
+        print(f"The total Amount recieved in {dbill} :  ",r)
+        
 
-
-    elif(choice==8):
+    elif(choice==9):
         break
     
