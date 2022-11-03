@@ -1,8 +1,11 @@
 import mysql.connector
+import sys
 from datetime import datetime
 
-mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'hoteldb')
-
+try:
+    mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'hoteldb')
+except mysql.connector.Error as e:
+    sys.exit("Connection Error")
 mycursor = mydb.cursor()
 
 #creating a menudriven
@@ -55,27 +58,36 @@ while(True):
         for i in items:
             print(i)
         print("Total bill = ",total)
-        sql = "INSERT INTO `bills`(`name`, `phone`, `amount`, `date`) VALUES (%s,%s,%s,now())"
-        data=(name,phone,total)
-        mycursor.execute(sql,data)
-        mydb.commit()
+        try:
+            sql = "INSERT INTO `bills`(`name`, `phone`, `amount`, `date`) VALUES (%s,%s,%s,now())"
+            data=(name,phone,total)
+            mycursor.execute(sql,data)
+            mydb.commit()
+        except mysql.connector.Error as e:
+            sys.exit(e)
         print("Data inserted into database")
         items=[]
         total = 0
     elif(choice ==7):
         print("View All transaction date wise")
         dbill = input("Enter the date: ")
-        sql = "SELECT `name`, `phone`, `amount`, `date` FROM `bills` WHERE `date`= '"+dbill+"'"
-        mycursor.execute(sql)
-        result = mycursor.fetchall()
+        try:
+            sql = "SELECT `name`, `phone`, `amount`, `date` FROM `bills` WHERE `date`= '"+dbill+"'"
+            mycursor.execute(sql)
+            result = mycursor.fetchall()
+        except mysql.connector.Error as e:
+            sys.exit("connector error")
         for i in result:
             print(i)
     elif(choice ==8):
         print("View the transaction summary")
         dbill = input("Enter the date: ")
-        sql = "SELECT  SUM(`amount`) FROM `bills` WHERE `date` = '"+dbill+"'"
-        mycursor.execute(sql)
-        result = mycursor.fetchall()
+        try:
+            sql = "SELECT  SUM(`amount`) FROM `bills` WHERE `date` = '"+dbill+"'"
+            mycursor.execute(sql)
+            result = mycursor.fetchall()
+        except mysql.connector.Error as e:
+            sys.exit("Connection error")
         for i in result:
             r = str(i[0])
         print(f"The total Amount recieved in {dbill} :  ",r)
@@ -83,9 +95,12 @@ while(True):
         print("View the transaction summary of a period")
         dbill = input("Enter the first date: ")
         dbill2=input("Enter the second date: ")
-        sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date` BETWEEN '"+dbill+"' AND '"+dbill2+"'"
-        mycursor.execute(sql)
-        result = mycursor.fetchall()
+        try:
+            sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date` BETWEEN '"+dbill+"' AND '"+dbill2+"'"
+            mycursor.execute(sql)
+            result = mycursor.fetchall()
+        except mysql.connector.Error as e:
+            sys.exit(e)
         for i in result:
             r = str(i[0])
         print(f"The total Amount recieved from {dbill} and {dbill2} :  ",r)
