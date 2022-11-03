@@ -1,4 +1,5 @@
 import mysql.connector
+from datetime import datetime
 
 mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'hoteldb')
 
@@ -40,6 +41,13 @@ while(True):
         total += 40*quantity
         items.append("Burger x "+str(quantity))
     elif(choice==6):
+        name = input("Enter your name: ")
+        phone = input("Enter your phone: ")
+        print("######Your Bill#####")
+        print("Name: ",name)
+        print("Phone: ",phone)
+        print("Date : ",datetime.today().strftime('%Y-%m-%d'))
+        print("***Purchased Items***")
         for i in items:
             print(i)
         print("Total bill = ",total)
