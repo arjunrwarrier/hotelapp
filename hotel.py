@@ -78,7 +78,10 @@ while(True):
         except mysql.connector.Error as e:
             sys.exit("connector error")
         for i in result:
-            print(i)
+            print("name: ",i[0])
+            print("phone: ",i[1])
+            print("amount: ",i[2])
+            print("date: ",i[3],"\n")
     elif(choice ==8):
         print("View the transaction summary")
         dbill = input("Enter the date: ")
