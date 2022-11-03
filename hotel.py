@@ -1,3 +1,9 @@
+import mysql.connector
+
+mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'hoteldb')
+
+mycursor = mydb.cursor()
+
 #creating a menudriven
 items=[]
 total = 0
@@ -14,17 +20,29 @@ while(True):
 
     choice = int(input("Enter a choice:"))
     if(choice == 1):
-        print("choice 1")
+        quantity=int(input("Please enter the quantity: "))
+        total += 10*quantity
+        items.append("Tea x "+str(quantity))
     elif(choice==2):
-        print("choice 2")
+        quantity=int(input("Please enter the quantity: "))
+        total += 20*quantity
+        items.append("Coffee x "+str(quantity))
     elif(choice==3):
-        print("choice 3")
+        quantity=int(input("Please enter the quantity: "))
+        total += 15*quantity
+        items.append("Vada x "+str(quantity))
     elif(choice==4):
-        qprint("choice 4")
+        quantity=int(input("Please enter the quantity: "))
+        total += 30*quantity
+        items.append("Sandwich x "+str(quantity))
     elif(choice==5):
-        print("choice 5")
+        quantity=int(input("Please enter the quantity: "))
+        total += 40*quantity
+        items.append("Burger x "+str(quantity))
     elif(choice==6):
-        print("choice 6")
+        for i in items:
+            print(i)
+        print("Total bill = ",total)
     elif(choice==7):
         break
     
