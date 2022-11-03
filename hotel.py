@@ -17,7 +17,8 @@ while(True):
     print("***4.Sandwich--30rs***")
     print("***5.Burger----40rs***")
     print("***6.-----Bill-----***")
-    print("***7.-----Exit-----***")
+    print("'''7.View all transaction''")
+    print("***8.-----Exit-----***")
 
     choice = int(input("Enter a choice:"))
     if(choice == 1):
@@ -59,6 +60,16 @@ while(True):
         print("Data inserted into database")
         items=[]
         total = 0
-    elif(choice==7):
+    elif(choice ==7):
+        print("View All transaction date wise")
+        dbill = input("Enter the date: ")
+        sql = "SELECT `name`, `phone`, `amount`, `date` FROM `bills` WHERE `date`= '"+dbill+"'"
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        for i in result:
+            print(i)
+
+
+    elif(choice==8):
         break
     
