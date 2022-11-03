@@ -46,11 +46,17 @@ while(True):
         print("######Your Bill#####")
         print("Name: ",name)
         print("Phone: ",phone)
-        print("Date : ",datetime.today().strftime('%Y-%m-%d'))
+        date = datetime.today().strftime('%Y-%m-%d')
+        print("Date : "+date)
         print("***Purchased Items***")
         for i in items:
             print(i)
         print("Total bill = ",total)
+        sql = "INSERT INTO `bills`(`name`, `phone`, `amount`, `date`) VALUES (%s,%s,%s,%s)"
+        data=(name,phone,total,date)
+        mycursor.execute(sql,data)
+        mydb.commit()
+        print("Data inserted into database")
     elif(choice==7):
         break
     
