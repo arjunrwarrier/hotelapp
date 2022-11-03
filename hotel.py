@@ -1,6 +1,7 @@
 import mysql.connector
 import sys
 from datetime import datetime
+from tabulate import tabulate
 
 try:
     mydb = mysql.connector.connect(host = 'localhost', user = 'root', password = '', database = 'hoteldb')
@@ -72,28 +73,22 @@ while(True):
         print("View All transaction date wise")
         dbill = input("Enter the date: ")
         try:
-            sql = "SELECT `name`, `phone`, `amount`, `date` FROM `bills` WHERE `date`= '"+dbill+"'"
+            sql = "SELECT `name`, `phone`, `amount`FROM `bills` WHERE `date`= '"+dbill+"'"
             mycursor.execute(sql)
             result = mycursor.fetchall()
         except mysql.connector.Error as e:
             sys.exit("connector error")
-        for i in result:
-            print("name: ",i[0])
-            print("phone: ",i[1])
-            print("amount: ",i[2])
-            print("date: ",i[3],"\n")
+        print(tabulate(result,headers=['Name','Phone','Amount'],tablefmt="psql"))
     elif(choice ==8):
         print("View the transaction summary")
         dbill = input("Enter the date: ")
         try:
-            sql = "SELECT  SUM(`amount`) FROM `bills` WHERE `date` = '"+dbill+"'"
+            sql = "SELECT  SUM(`amount`), `date` FROM `bills` WHERE `date` = '"+dbill+"'"
             mycursor.execute(sql)
             result = mycursor.fetchall()
         except mysql.connector.Error as e:
             sys.exit("Connection error")
-        for i in result:
-            r = str(i[0])
-        print(f"The total Amount recieved in {dbill} :  ",r)
+        print(tabulate(result,headers=["Amount","Date"],tablefmt="psql"))
     elif(choice ==9):
         print("View the transaction summary of a period")
         dbill = input("Enter the first date: ")
@@ -104,9 +99,7 @@ while(True):
             result = mycursor.fetchall()
         except mysql.connector.Error as e:
             sys.exit(e)
-        for i in result:
-            r = str(i[0])
-        print(f"The total Amount recieved from {dbill} and {dbill2} :  ",r)
+        print(tabulate(result,headers=["Amount"],tablefmt="psql"))
             
 
     elif(choice==10):
