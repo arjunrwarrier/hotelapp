@@ -52,11 +52,13 @@ while(True):
         for i in items:
             print(i)
         print("Total bill = ",total)
-        sql = "INSERT INTO `bills`(`name`, `phone`, `amount`, `date`) VALUES (%s,%s,%s,%s)"
-        data=(name,phone,total,date)
+        sql = "INSERT INTO `bills`(`name`, `phone`, `amount`, `date`) VALUES (%s,%s,%s,now())"
+        data=(name,phone,total)
         mycursor.execute(sql,data)
         mydb.commit()
         print("Data inserted into database")
+        items=[]
+        total = 0
     elif(choice==7):
         break
     
