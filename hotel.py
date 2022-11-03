@@ -17,9 +17,10 @@ while(True):
     print("***4.Sandwich--30rs***")
     print("***5.Burger----40rs***")
     print("***6.-----Bill-----***")
-    print("'''7.View all transaction''")
-    print("'''8.View transaction summary''")
-    print("***9.-----Exit-----***")
+    print("***7.View all transaction**")
+    print("***8.View transaction summary**")
+    print("***9.View transaction summary of a period.**")
+    print("***10.-----Exit-----***")
 
     choice = int(input("Enter a choice:"))
     if(choice == 1):
@@ -78,8 +79,18 @@ while(True):
         for i in result:
             r = str(i[0])
         print(f"The total Amount recieved in {dbill} :  ",r)
-        
+    elif(choice ==9):
+        print("View the transaction summary of a period")
+        dbill = input("Enter the first date: ")
+        dbill2=input("Enter the second date: ")
+        sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date` BETWEEN '"+dbill+"' AND '"+dbill2+"'"
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        for i in result:
+            r = str(i[0])
+        print(f"The total Amount recieved from {dbill} and {dbill2} :  ",r)
+            
 
-    elif(choice==9):
+    elif(choice==10):
         break
     
